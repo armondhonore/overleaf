@@ -8,10 +8,8 @@ application:
     - 80
     vars:
       OVERLEAF_REDIS_HOST: overleaf-redis.pod
-      REDIS_HOST: overleaf-redis.pod
       OVERLEAF_MONGO_URL: "mongodb://overleaf-mongo.pod:27017/sharelatex"
-      MONGO_URL: "mongodb://overleaf-mongo.pod:27017/sharelatex"
-      SHARELATEX_APP_NAME: "Overleaf CE"
+      OVERLEAF_APP_NAME: "Overleaf CE"
     volumes:
     - name: overleaf-data
       mountPath: /var/lib/overleaf
