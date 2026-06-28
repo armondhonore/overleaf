@@ -2,19 +2,21 @@ application:
   name: overleaf
   pods:
   - name: app
-    image: sharelatex/sharelatex:latest
+    image: sharelatex/sharelatex:5
     path: /
     servicePorts:
     - 80
     vars:
-      REDIS_HOST: redis.pod
-      MONGO_URL: "mongodb://mongo.pod:27017/sharelatex"
+      OVERLEAF_REDIS_HOST: overleaf-redis.pod
+      REDIS_HOST: overleaf-redis.pod
+      OVERLEAF_MONGO_URL: "mongodb://overleaf-mongo.pod:27017/sharelatex"
+      MONGO_URL: "mongodb://overleaf-mongo.pod:27017/sharelatex"
       SHARELATEX_APP_NAME: "Overleaf CE"
     volumes:
     - name: overleaf-data
       mountPath: /var/lib/sharelatex
       size: 10Gi
-  - name: mongo
+  - name: overleaf-mongo
     image: mongo:6
     servicePorts:
     - 27017
@@ -22,7 +24,7 @@ application:
     - name: overleaf-mongo
       mountPath: /data/db
       size: 10Gi
-  - name: redis
+  - name: overleaf-redis
     image: redis:7-alpine
     servicePorts:
     - 6379
