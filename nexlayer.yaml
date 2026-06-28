@@ -8,20 +8,22 @@ application:
     - 80
     vars:
       OVERLEAF_REDIS_HOST: overleaf-redis.pod
-      OVERLEAF_MONGO_URL: "mongodb://overleaf-mongo.pod:27017/sharelatex"
+      OVERLEAF_MONGO_URL: "mongodb://overleaf-mongo.pod:27017/sharelatex?directConnection=true"
       OVERLEAF_APP_NAME: "Overleaf CE"
     volumes:
     - name: overleaf-data
       mountPath: /var/lib/overleaf
       size: 10Gi
   - name: overleaf-mongo
-    image: mongo:6
+    image: bitnami/mongodb:latest
     servicePorts:
     - 27017
-    volumes:
-    - name: overleaf-mongo
-      mountPath: /data/db
-      size: 10Gi
+    vars:
+      MONGODB_REPLICA_SET_MODE: primary
+      MONGODB_REPLICA_SET_NAME: rs0
+      MONGODB_ADVERTISED_HOSTNAME: overleaf-overleaf-mongo-service.relaxed-weasel.svc.cluster.local
+      MONGODB_PRIMARY_HOST: overleaf-overleaf-mongo-service.relaxed-weasel.svc.cluster.local
+      ALLOW_EMPTY_PASSWORD: "yes"
   - name: overleaf-redis
     image: redis:7-alpine
     servicePorts:
