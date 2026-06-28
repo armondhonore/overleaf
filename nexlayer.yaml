@@ -14,7 +14,7 @@ application:
       SHARELATEX_APP_NAME: "Overleaf CE"
     volumes:
     - name: overleaf-data
-      mountPath: /var/lib/sharelatex
+      mountPath: /var/lib/overleaf
       size: 10Gi
   - name: overleaf-mongo
     image: mongo:6
